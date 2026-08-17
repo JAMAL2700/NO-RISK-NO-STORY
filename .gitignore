@@ -1,0 +1,7 @@
+# Backup-Exports (enthalten persönliche Trade-Daten, gehören nicht ins Repo)
+trading-journal-backup-*.json
+*.backup.json
+
+# OS/Editor-Kram
+.DS_Store
+Thumbs.db

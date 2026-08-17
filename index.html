@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trading Journal</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Trading-Grid im Hintergrund, langsam driftend -->
+<div class="bg-grid"></div>
+
+<!-- Ambient Hintergrund-Blobs -->
+<div class="bg-glow bg-glow-1"></div>
+<div class="bg-glow bg-glow-2"></div>
+<div class="bg-glow bg-glow-3"></div>
+<div class="bg-glow bg-glow-4"></div>
+<div class="bg-glow bg-glow-5"></div>
+<div class="bg-glow bg-glow-6"></div>
+
+<!-- Treibende Partikel -->
+<div class="particles" id="particles"></div>
+
+<!-- Sich aufbauender Chart, fixer Hintergrund für die ganze Seite -->
+<div class="chart-bg" id="chart-bg"></div>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-inner">
+    <p class="hero-eyebrow reveal">TRADING JOURNAL</p>
+    <h1 class="hero-title">
+      <span class="reveal hero-exit-left" id="exit-left" style="transition-delay:.05s">NO RISK.</span>
+      <span class="reveal gradient-text hero-exit-right" id="exit-right" style="transition-delay:.2s">NO STORY.</span>
+    </h1>
+    <p class="hero-sub reveal" style="transition-delay:.35s">
+      Jeder Trade eine Zeile deiner Geschichte. Trag ihn ein, lern draus, werd besser.
+    </p>
+  </div>
+  <button class="scroll-hint reveal" style="transition-delay:.5s" id="scroll-hint" aria-label="Runterscrollen">
+    <span>Scroll zum Eintragen</span>
+    <span class="scroll-arrow">↓</span>
+  </button>
+</section>
+
+<!-- APP -->
+<div id="app">
+
+  <nav class="tabs glass">
+    <button class="tab-btn active" data-tab="eintrag">Eintrag</button>
+    <button class="tab-btn" data-tab="chart">Chart</button>
+    <button class="tab-btn" data-tab="btc">BTC</button>
+  </nav>
+
+  <main>
+
+    <!-- TAB: EINTRAG (Eingabe + Übersicht + Auswertung zusammen) -->
+    <section id="eintrag" class="tab-content active">
+
+      <h2 class="section-heading reveal">Neuer Trade</h2>
+      <form id="trade-form">
+
+        <div class="card glass reveal">
+          <h2 class="card-title">Trade-Daten</h2>
+          <div class="field-grid">
+            <div class="field">
+              <label for="datum">Datum</label>
+              <input type="date" id="datum" required>
+            </div>
+            <div class="field">
+              <label for="coin">Coin</label>
+              <input type="text" id="coin" placeholder="z.B. BTC, ETH, SOL" required>
+            </div>
+            <div class="field">
+              <label for="richtung">Richtung</label>
+              <select id="richtung" required>
+                <option value="Long">Long</option>
+                <option value="Short">Short</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="einstieg">Einstieg</label>
+              <input type="number" step="any" id="einstieg" placeholder="Einstiegspreis" required>
+            </div>
+            <div class="field">
+              <label for="ausstieg">Ausstieg</label>
+              <input type="number" step="any" id="ausstieg" placeholder="Ausstiegspreis" required>
+            </div>
+          </div>
+        </div>
+
+        <div class="card glass reveal">
+          <h2 class="card-title">Ergebnis &amp; Risiko</h2>
+          <div class="field-grid">
+            <div class="field">
+              <label for="ergebnis">Ergebnis</label>
+              <select id="ergebnis" required>
+                <option value="Win">Win</option>
+                <option value="Loss">Loss</option>
+                <option value="Breakeven">Breakeven</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="pnl">PnL (optional)</label>
+              <input type="number" step="any" id="pnl" placeholder="z.B. 45.50">
+            </div>
+            <div class="field">
+              <label for="setup">Setup-Typ</label>
+              <select id="setup" required>
+                <option value="SK-Strategie">SK-Strategie</option>
+                <option value="Breakout">Breakout</option>
+                <option value="Reversal">Reversal</option>
+                <option value="SMC">SMC (Smart Money Concepts)</option>
+                <option value="Sonstiges">Sonstiges</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="risiko">Positionsgröße / Risiko (%)</label>
+              <input type="number" step="any" id="risiko" placeholder="z.B. 1.5">
+            </div>
+          </div>
+        </div>
+
+        <div class="card glass reveal">
+          <h2 class="card-title">Psychologie &amp; Notizen</h2>
+          <div class="field-grid">
+            <div class="field">
+              <label for="emotion">Emotionale Einschätzung</label>
+              <select id="emotion" required>
+                <option value="Diszipliniert">Diszipliniert</option>
+                <option value="FOMO">FOMO</option>
+                <option value="Impulsiv">Impulsiv</option>
+                <option value="Unsicher">Unsicher</option>
+                <option value="Sonstiges">Sonstiges</option>
+              </select>
+            </div>
+            <div class="field field-wide">
+              <label for="notiz">Notiz</label>
+              <textarea id="notiz" rows="4" placeholder="Was lief gut, was schlecht, was gelernt?"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="card glass reveal">
+          <h2 class="card-title">Chart-Screenshot</h2>
+          <label class="file-drop" for="screenshot">
+            <span id="file-drop-label">Screenshot auswählen</span>
+          </label>
+          <input type="file" id="screenshot" accept="image/*" class="file-input">
+          <img id="screenshot-preview" class="preview" alt="">
+        </div>
+
+        <div class="form-actions reveal">
+          <button type="submit" class="btn-primary" id="submit-btn">Trade speichern</button>
+          <button type="button" class="btn-secondary" id="cancel-edit-btn" style="display:none">Bearbeitung abbrechen</button>
+        </div>
+        <p id="save-confirm" class="confirm"></p>
+      </form>
+
+      <h2 class="section-heading reveal">Übersicht</h2>
+
+      <div class="toolbar reveal">
+        <input type="text" id="search-input" placeholder="Suche nach Coin oder Notiz…" class="search-input">
+        <select id="filter-setup" class="filter-select">
+          <option value="">Alle Setups</option>
+          <option value="SK-Strategie">SK-Strategie</option>
+          <option value="Breakout">Breakout</option>
+          <option value="Reversal">Reversal</option>
+          <option value="SMC">SMC</option>
+          <option value="Sonstiges">Sonstiges</option>
+        </select>
+      </div>
+
+      <div class="toolbar reveal">
+        <button type="button" class="btn-secondary" id="export-btn">Backup exportieren</button>
+        <button type="button" class="btn-secondary" id="import-btn">Backup importieren</button>
+        <input type="file" id="import-file" accept="application/json" class="file-input">
+      </div>
+      <p id="import-msg" class="confirm"></p>
+
+      <div class="card glass reveal">
+        <table id="trades-table">
+          <thead>
+            <tr>
+              <th>Datum</th>
+              <th>Coin</th>
+              <th>Richtung</th>
+              <th>Setup</th>
+              <th>Ergebnis</th>
+              <th>Notiz</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="trades-tbody">
+            <!-- wird per JS befüllt -->
+          </tbody>
+        </table>
+        <p id="keine-trades" class="hint">Noch keine Trades eingetragen.</p>
+      </div>
+
+      <!-- Detail-Modal für einen einzelnen Trade -->
+      <div id="trade-modal" class="modal hidden">
+        <div class="modal-content glass">
+          <button id="modal-close" class="modal-close">×</button>
+          <div id="modal-body"></div>
+        </div>
+      </div>
+
+      <h2 class="section-heading reveal">Auswertung</h2>
+      <div class="stats">
+        <div class="stat-card glass reveal">
+          <span class="stat-label">Trades gesamt</span>
+          <span class="stat-value" id="stat-anzahl">0</span>
+        </div>
+        <div class="stat-card glass reveal" style="transition-delay:.1s">
+          <span class="stat-label">Winrate</span>
+          <span class="stat-value gradient-text" id="stat-winrate">0%</span>
+        </div>
+        <div class="stat-card glass reveal" style="transition-delay:.2s">
+          <span class="stat-label">Ø Risk/Reward</span>
+          <span class="stat-value" id="stat-rr">–</span>
+        </div>
+      </div>
+
+      <div class="card glass reveal equity-card">
+        <h2 class="card-title">Kontoverlauf</h2>
+        <svg id="equity-svg" class="equity-svg" viewBox="0 0 600 160" preserveAspectRatio="none"></svg>
+        <p id="equity-hint" class="hint">Noch keine Daten.</p>
+      </div>
+
+      <div class="card glass reveal">
+        <h2 class="card-title">Winrate pro Setup</h2>
+        <div id="setup-breakdown" class="setup-breakdown">
+          <p class="hint">Noch keine Daten.</p>
+        </div>
+      </div>
+
+      <div class="card glass reveal">
+        <h2 class="card-title">Winrate nach Emotion</h2>
+        <div id="emotion-breakdown" class="setup-breakdown">
+          <p class="hint">Noch keine Daten.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB: LIVE CHART (TradingView) -->
+    <section id="chart" class="tab-content">
+      <h2 class="section-heading reveal" style="margin-top:0">Live Chart</h2>
+      <p class="hint chart-hint reveal">BTC/USDT · live von TradingView, braucht Internetverbindung</p>
+      <div class="card glass reveal chart-card">
+        <div id="tradingview_btc" class="tradingview-widget"></div>
+      </div>
+    </section>
+
+    <!-- TAB: BTC BASICS -->
+    <section id="btc" class="tab-content">
+      <div class="card glass reveal">
+        <p class="tag-label">GRUNDLAGEN</p>
+        <h2 class="card-title-lg">Was ist Bitcoin eigentlich?</h2>
+        <p class="card-text">
+          Bitcoin ist Geld ohne Bank dazwischen. Statt dass eine zentrale Stelle
+          Kontostände verwaltet, führen tausende Rechner weltweit gemeinsam ein
+          öffentliches Kassenbuch — die Blockchain. Niemand kann im Nachhinein
+          eine Zeile fälschen, weil jeder Block auf den vorherigen aufbaut und
+          das ganze Netzwerk mitliest.
+        </p>
+      </div>
+
+      <div class="card glass reveal">
+        <p class="tag-label">BLOCKCHAIN</p>
+        <h2 class="card-title-lg">Wie das Kassenbuch sich selbst schützt</h2>
+        <p class="card-text">
+          Neue Transaktionen werden alle ~10 Minuten zu einem Block gepackt.
+          Damit der gültig wird, müssen Rechner im Netzwerk ein hartes
+          Rechenrätsel lösen (Proof of Work) — wer's zuerst schafft, hängt den
+          Block an die Kette. Jeder Block trägt den Fingerabdruck (Hash) des
+          vorherigen. Würde jemand eine alte Transaktion fälschen, würde dieser
+          Fingerabdruck nicht mehr passen — die Kette bricht, das Netzwerk merkt's sofort.
+        </p>
+      </div>
+
+      <div class="card glass reveal">
+        <p class="tag-label">KNAPPHEIT</p>
+        <h2 class="card-title-lg">Halving &amp; harte Obergrenze</h2>
+        <p class="card-text">
+          Es wird nie mehr als 21 Millionen BTC geben — fest im Code verankert.
+          Etwa alle 4 Jahre halbiert sich die Belohnung fürs Mining (Halving),
+          neue Coins kommen also immer langsamer nach. Diese eingebaute
+          Knappheit ist einer der Kern-Gründe, warum BTC oft als "digitales Gold"
+          gehandelt wird.
+        </p>
+      </div>
+
+      <div class="card glass reveal">
+        <p class="tag-label">MAKRO</p>
+        <h2 class="card-title-lg">Warum Zinsen und die Fed dich interessieren sollten</h2>
+        <p class="card-text">
+          BTC hängt trotz aller Dezentralität stark am globalen Finanzsystem.
+          Erhöht die US-Notenbank (Fed) die Leitzinsen, wird Geld teurer — Kapital
+          zieht sich aus riskanten Assets wie Bitcoin zurück. Senkt sie die Zinsen
+          oder pumpt Liquidität ins System, läuft's meist andersrum. Wer BTC
+          handelt, sollte also nicht nur den Chart lesen, sondern auch wissen
+          wann FOMC-Entscheidungen und Inflationsdaten (CPI) anstehen.
+        </p>
+      </div>
+
+      <div class="card glass reveal">
+        <p class="tag-label">FÜRS TRADING</p>
+        <h2 class="card-title-lg">Warum dich das als Trader was angeht</h2>
+        <p class="card-text">
+          On-Chain-Daten (Haltestrukturen, Handelsvolumen, MVRV Z-Score) zeigen
+          dir, ob der Markt gerade überhitzt oder unterbewertet ist — Bitcoin ist
+          eine der wenigen Anlageklassen, wo die komplette Wirtschaft öffentlich
+          einsehbar ist. Kombiniert mit Makro-Kontext (Zinsen, Regulierung, ETFs)
+          gibst du deinen Setups aus der Eingabe hier oben mehr Substanz als
+          reines Chart-Staring.
+        </p>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
