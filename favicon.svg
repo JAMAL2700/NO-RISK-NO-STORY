@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="g" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0%" stop-color="#8b5cf6"/>
+      <stop offset="100%" stop-color="#22d3ee"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Hintergrund: abgerundetes dunkles Quadrat, wie die Glass-Cards -->
+  <rect width="64" height="64" rx="16" fill="#050506"/>
+  <rect width="64" height="64" rx="16" fill="url(#g)" opacity="0.08"/>
+
+  <!-- Aufsteigende Candles, gleicher Look wie der Hero-Chart -->
+  <g stroke="url(#g)" stroke-width="2" stroke-linecap="round">
+    <line x1="14" y1="30" x2="14" y2="46"/>
+    <line x1="27" y1="22" x2="27" y2="46"/>
+    <line x1="40" y1="12" x2="40" y2="46"/>
+    <line x1="53" y1="18" x2="53" y2="46"/>
+  </g>
+  <g fill="url(#g)">
+    <rect x="10" y="34" width="8" height="10" rx="2"/>
+    <rect x="23" y="27" width="8" height="15" rx="2"/>
+    <rect x="36" y="16" width="8" height="24" rx="2"/>
+    <rect x="49" y="22" width="8" height="18" rx="2"/>
+  </g>
+</svg>

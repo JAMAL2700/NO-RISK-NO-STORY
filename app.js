@@ -1,4 +1,4 @@
-// Trading Journal — lokale App, alles läuft im Browser, Daten in localStorage
+﻿// Trading Journal — lokale App, alles läuft im Browser, Daten in localStorage
 const STORAGE_KEY = "trades";
 
 // ---------- Scroll-Hint (Hero -> App) ----------
@@ -19,7 +19,7 @@ for (let i = 0; i < 26; i++) {
   p.style.width = `${size}px`;
   p.style.height = `${size}px`;
   p.style.background = color;
-  p.style.boxShadow = `0 0 ${size * 2.5}px ${color}`;
+  p.style.boxShadow = `0 0 ${size * 1.6}px ${color}`;
   p.style.setProperty("--drift-x", `${(Math.random() - 0.5) * 120}px`);
   p.style.animationDuration = `${14 + Math.random() * 16}s`;
   p.style.animationDelay = `${-Math.random() * 25}s`;
@@ -38,7 +38,9 @@ const heroSub = document.querySelector(".hero-sub");
 const subChars = [...heroSub.textContent.trim()].map((ch) => {
   const span = document.createElement("span");
   span.className = "sub-char";
-  span.textContent = ch;
+  // Leerzeichen als geschuetztes Leerzeichen (U+00A0), sonst kollabiert
+  // die Breite bei display:inline-block auf 0 und Woerter kleben zusammen.
+  span.textContent = ch.trim() === "" ? String.fromCharCode(160) : ch;
   return span;
 });
 heroSub.innerHTML = "";

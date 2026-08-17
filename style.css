@@ -57,8 +57,8 @@ body {
 .bg-glow {
   position: fixed;
   border-radius: 50%;
-  filter: blur(110px);
-  opacity: 0.35;
+  filter: blur(130px);
+  opacity: 0.16;
   z-index: -2;
   pointer-events: none;
   animation: float 22s ease-in-out infinite;
@@ -79,7 +79,7 @@ body {
   width: 380px; height: 380px;
   top: 45%; left: 50%;
   background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
-  opacity: 0.16;
+  opacity: 0.08;
   animation-delay: -15s;
   animation-duration: 30s;
 }
@@ -87,7 +87,7 @@ body {
   width: 300px; height: 300px;
   top: 10%; right: 8%;
   background: var(--accent-2);
-  opacity: 0.22;
+  opacity: 0.1;
   animation-delay: -3s;
   animation-duration: 20s;
 }
@@ -95,7 +95,7 @@ body {
   width: 340px; height: 340px;
   bottom: -80px; left: 12%;
   background: var(--accent-1);
-  opacity: 0.2;
+  opacity: 0.09;
   animation-delay: -19s;
   animation-duration: 24s;
 }
@@ -103,7 +103,7 @@ body {
   width: 260px; height: 260px;
   top: 68%; right: 22%;
   background: linear-gradient(135deg, var(--accent-2), var(--accent-1));
-  opacity: 0.18;
+  opacity: 0.08;
   animation-delay: -10s;
   animation-duration: 28s;
 }
@@ -136,8 +136,8 @@ body {
 
 @keyframes drift {
   0% { transform: translateY(0) translateX(0); opacity: 0; }
-  10% { opacity: 1; }
-  90% { opacity: 1; }
+  10% { opacity: 0.55; }
+  90% { opacity: 0.55; }
   100% { transform: translateY(-110vh) translateX(var(--drift-x, 40px)); opacity: 0; }
 }
 
@@ -208,7 +208,7 @@ body {
   gap: clamp(2px, 0.6vw, 8px);
   padding: 0 clamp(8px, 3vw, 40px);
   z-index: -3;
-  opacity: 0.55;
+  opacity: 0.38;
   pointer-events: none;
   mask-image: linear-gradient(to top, black 35%, transparent 100%);
   -webkit-mask-image: linear-gradient(to top, black 35%, transparent 100%);
