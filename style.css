@@ -196,50 +196,44 @@ body {
   position: relative;
 }
 
-/* ---------- Sich aufbauender Chart: fixer Hintergrund der ganzen Seite ---------- */
+/* ---------- Sich aufbauender Chart: fixer Hintergrund der ganzen Seite ----------
+   Echter Candlestick-Chart als SVG (Körper + Docht + Kurslinie), damit er auf
+   PC und Handy identisch skaliert. Baut sich als Ganzes von unten nach oben
+   auf (clip-path-Wipe in updateHeroScroll), statt einzelner wachsender Balken. */
 .chart-bg {
   position: fixed;
   inset: auto 0 0 0;
   height: 52vh;
   width: 100vw;
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: clamp(2px, 0.6vw, 8px);
-  padding: 0 clamp(8px, 3vw, 40px);
   z-index: -3;
-  opacity: 0.38;
+  opacity: 0.4;
   pointer-events: none;
   mask-image: linear-gradient(to top, black 35%, transparent 100%);
   -webkit-mask-image: linear-gradient(to top, black 35%, transparent 100%);
+  clip-path: inset(100% 0 0 0);
 }
 
-.candle {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex: 1 1 auto;
-  max-width: 22px;
-  transform: scaleY(0);
-  transform-origin: bottom center;
+#chart-wicks line {
+  stroke: rgba(255,255,255,0.55);
+  stroke-width: 3;
+  stroke-linecap: round;
 }
 
-.candle .wick {
-  width: 2px;
-  background: rgba(255,255,255,0.5);
+.chart-body.up {
+  fill: #f4f5f7;
 }
 
-.candle .body {
-  width: 100%;
-  border-radius: 2px;
+.chart-body.down {
+  fill: #9b9fab;
 }
 
-.candle.up .body {
-  background: linear-gradient(180deg, #ffffff, #c7cad2);
-}
-
-.candle.down .body {
-  background: linear-gradient(180deg, #9b9fab, #6b6e79);
+#chart-line {
+  stroke: url(#chart-line-gradient);
+  stroke-width: 3;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  opacity: 0.75;
+  filter: drop-shadow(0 0 6px rgba(34,211,238,0.35));
 }
 
 .hero-title span {

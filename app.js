@@ -46,8 +46,10 @@ const subChars = [...heroSub.textContent.trim()].map((ch) => {
 heroSub.innerHTML = "";
 subChars.forEach((span) => heroSub.appendChild(span));
 
-// Echte Auf-und-Ab-Bewegung wie ein Preis-Chart: überlagerte Wellen statt reinem Aufwärtstrend,
-// deterministisch (kein Math.random) damit der Chart bei jedem Laden gleich aussieht.
+// Echter Candlestick-Chart als SVG: Körper + Docht + eine durchgezogene
+// Kurslinie oben drüber, damit es wirklich wie ein Chart aussieht und nicht
+// wie einzelne wachsende Balken. Höhen aus überlagerten Wellen (deterministisch,
+// kein Math.random, damit der Chart bei jedem Laden gleich aussieht).
 const CANDLE_COUNT = 42;
 const CANDLE_HEIGHTS = Array.from({ length: CANDLE_COUNT }, (_, i) => {
   const wave =
@@ -57,27 +59,48 @@ const CANDLE_HEIGHTS = Array.from({ length: CANDLE_COUNT }, (_, i) => {
   const h = 90 + wave;
   return Math.max(20, Math.round(h));
 });
-const candleEls = CANDLE_HEIGHTS.map((h, i) => {
+
+const CHART_VB_W = 1000;
+const CHART_VB_H = 400;
+const CHART_BASE_Y = 388;
+const CHART_SCALE = 1.9;
+
+const chartWicksG = document.getElementById("chart-wicks");
+const chartBodiesG = document.getElementById("chart-bodies");
+const chartLine = document.getElementById("chart-line");
+
+const svgNS = "http://www.w3.org/2000/svg";
+const slotW = CHART_VB_W / CANDLE_COUNT;
+const bodyW = slotW * 0.58;
+
+const linePoints = CANDLE_HEIGHTS.map((h, i) => {
   const up = i === 0 ? true : h >= CANDLE_HEIGHTS[i - 1];
-  const candle = document.createElement("div");
-  candle.className = `candle ${up ? "up" : "down"}`;
+  const xCenter = slotW * i + slotW / 2;
+  const bodyH = h * CHART_SCALE;
+  const topY = CHART_BASE_Y - bodyH;
+  const wickTopLen = (6 + (i % 3) * 4) * CHART_SCALE * 0.6;
+  const wickBottomLen = (6 + ((i + 1) % 3) * 4) * CHART_SCALE * 0.6;
 
-  const wickTop = document.createElement("div");
-  wickTop.className = "wick";
-  wickTop.style.height = `${6 + (i % 3) * 4}px`;
+  const wick = document.createElementNS(svgNS, "line");
+  wick.setAttribute("x1", xCenter);
+  wick.setAttribute("x2", xCenter);
+  wick.setAttribute("y1", topY - wickTopLen);
+  wick.setAttribute("y2", CHART_BASE_Y + wickBottomLen);
+  chartWicksG.appendChild(wick);
 
-  const body = document.createElement("div");
-  body.className = "body";
-  body.style.height = `${h}px`;
+  const body = document.createElementNS(svgNS, "rect");
+  body.setAttribute("class", `chart-body ${up ? "up" : "down"}`);
+  body.setAttribute("x", xCenter - bodyW / 2);
+  body.setAttribute("y", topY);
+  body.setAttribute("width", bodyW);
+  body.setAttribute("height", bodyH);
+  body.setAttribute("rx", Math.min(4, bodyW / 3));
+  chartBodiesG.appendChild(body);
 
-  const wickBottom = document.createElement("div");
-  wickBottom.className = "wick";
-  wickBottom.style.height = `${6 + ((i + 1) % 3) * 4}px`;
-
-  candle.append(wickTop, body, wickBottom);
-  chartBg.appendChild(candle);
-  return candle;
+  return `${xCenter},${topY}`;
 });
+
+chartLine.setAttribute("points", linePoints.join(" "));
 
 // Text-Partikel: Titel & Zitat lösen sich beim Rausscrollen in kleine, farbige
 // Punkte auf, die wie die Hintergrund-Partikel nach oben wegfliegen.
@@ -166,12 +189,11 @@ function updateHeroScroll() {
     }
   });
 
-  const n = candleEls.length;
-  candleEls.forEach((el, i) => {
-    const threshold = i / n;
-    const grow = Math.min(Math.max((p - threshold) * n * 0.8, 0), 1);
-    el.style.transform = `scaleY(${grow})`;
-  });
+  // Chart baut sich als Ganzes von unten nach oben auf (Wipe-Reveal statt
+  // einzelner wachsender Balken) — deckt oben ab, deckt beim Scrollen auf.
+  const revealed = `${(1 - p) * 100}% 0 0 0`;
+  chartBg.style.clipPath = `inset(${revealed})`;
+  chartBg.style.webkitClipPath = `inset(${revealed})`;
 }
 
 let heroScrollTicking = false;
