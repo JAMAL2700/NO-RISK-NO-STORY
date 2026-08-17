@@ -1,0 +1,17 @@
+{
+  "name": "No Risk No Story — Trading Journal",
+  "short_name": "Trading Journal",
+  "description": "Trades und Setups tracken, direkt im Browser, keine Server.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#050506",
+  "theme_color": "#050506",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
