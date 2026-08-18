@@ -1,4 +1,4 @@
-name: BTC News taeglich aktualisieren
+name: Asset-News taeglich aktualisieren
 
 on:
   schedule:
@@ -23,13 +23,13 @@ jobs:
       - name: Dependencies installieren
         run: npm install rss-parser
 
-      - name: News abrufen und filtern
-        run: node scripts/fetch-btc-news.mjs
+      - name: News abrufen und filtern (BTC, ETH, SOL, HYPE, GOLD)
+        run: node scripts/fetch-news.mjs
 
       - name: Aenderungen committen und pushen
         run: |
-          git config user.name "btc-news-bot"
+          git config user.name "news-bot"
           git config user.email "actions@github.com"
-          git add data/btc-news.json
-          git diff --staged --quiet || git commit -m "BTC News Update $(date -u +%Y-%m-%d)"
+          git add data/news/
+          git diff --staged --quiet || git commit -m "News Update $(date -u +%Y-%m-%d)"
           git push

@@ -333,11 +333,17 @@
       </div>
     </section>
 
-    <!-- TAB: BTC NEWS -->
+    <!-- TAB: NEWS -->
     <section id="news" class="tab-content">
-      <h2 class="section-heading reveal" style="margin-top:0">BTC News</h2>
+      <h2 class="section-heading reveal" style="margin-top:0">News</h2>
       <p class="hint reveal">Täglich aktualisiert um 0 Uhr · Makro/Regulierung, On-Chain, Projekt-News — kein Grundrauschen, keine Kursprognosen</p>
-      <div id="news-list"></div>
+
+      <div id="news-coin-picker" class="coin-picker"></div>
+
+      <div id="news-detail" class="hidden">
+        <button type="button" id="news-back-btn" class="btn-secondary news-back-btn">← Alle Coins</button>
+        <div id="news-list"></div>
+      </div>
     </section>
 
     <!-- TAB: CHART-/CANDLESTICK-MUSTER -->

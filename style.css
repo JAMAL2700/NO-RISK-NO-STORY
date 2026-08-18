@@ -875,6 +875,43 @@ tr.trade-row:hover {
   line-height: 1.4;
 }
 
+/* ---------- News: Coin-Picker ---------- */
+.coin-picker {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 12px;
+}
+.coin-picker.hidden {
+  display: none;
+}
+
+.coin-tile {
+  aspect-ratio: 16 / 9;
+  border: none;
+  border-radius: 14px;
+  color: var(--text);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+.coin-tile:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+#news-detail.hidden {
+  display: none;
+}
+
+.news-back-btn {
+  margin-bottom: 16px;
+}
+
 /* ---------- BTC News ---------- */
 .news-day-heading {
   margin: 28px 0 10px;

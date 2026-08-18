@@ -187,21 +187,47 @@ function switchTab(tabId) {
   observeReveals();
 }
 
-// ---------- BTC News ----------
-// Liest data/btc-news.json, geschrieben von der taeglichen GitHub-Action
-// (.github/workflows/btc-news.yml). Kein Live-API-Call im Browser noetig.
-let newsLoaded = false;
+// ---------- News (BTC, ETH, SOL, HYPE, GOLD) ----------
+// Liest data/news/<coin>.json, geschrieben von der taeglichen GitHub-Action
+// (.github/workflows/news.yml). Kein Live-API-Call im Browser noetig.
+const NEWS_COINS = [
+  { key: "btc", symbol: "BTC" },
+  { key: "eth", symbol: "ETH" },
+  { key: "sol", symbol: "SOL" },
+  { key: "hype", symbol: "HYPE" },
+  { key: "gold", symbol: "XAU" },
+];
 
-async function loadNewsTab() {
-  if (newsLoaded) return;
-  newsLoaded = true;
+const coinPicker = document.getElementById("news-coin-picker");
+const newsDetail = document.getElementById("news-detail");
+
+function loadNewsTab() {
+  if (coinPicker.childElementCount > 0) return;
+  coinPicker.innerHTML = NEWS_COINS.map(
+    (c) => `<button type="button" class="coin-tile glass reveal" data-coin="${c.key}">${c.symbol}</button>`
+  ).join("");
+  observeReveals();
+  coinPicker.querySelectorAll(".coin-tile").forEach((btn) => {
+    btn.addEventListener("click", () => showNewsForCoin(btn.dataset.coin, btn.textContent));
+  });
+}
+
+document.getElementById("news-back-btn").addEventListener("click", () => {
+  newsDetail.classList.add("hidden");
+  coinPicker.classList.remove("hidden");
+});
+
+async function showNewsForCoin(coinKey, symbol) {
+  coinPicker.classList.add("hidden");
+  newsDetail.classList.remove("hidden");
   const list = document.getElementById("news-list");
+  list.innerHTML = `<p class="hint">Lädt…</p>`;
   try {
-    const res = await fetch("data/btc-news.json", { cache: "no-store" });
+    const res = await fetch(`data/news/${coinKey}.json`, { cache: "no-store" });
     if (!res.ok) throw new Error("News-Datei nicht gefunden");
     const days = await res.json();
     if (!days.length) {
-      list.innerHTML = `<p class="hint">Noch keine News eingetroffen — kommt mit dem nächsten täglichen Update.</p>`;
+      list.innerHTML = `<p class="hint">Noch keine ${symbol}-News eingetroffen — kommt mit dem nächsten täglichen Update.</p>`;
       return;
     }
     list.innerHTML = days
@@ -228,7 +254,6 @@ async function loadNewsTab() {
     observeReveals();
   } catch (err) {
     list.innerHTML = `<p class="hint">News konnten nicht geladen werden (${err.message}).</p>`;
-    newsLoaded = false;
   }
 }
 
