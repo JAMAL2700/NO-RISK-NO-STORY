@@ -23,6 +23,7 @@
 
 html {
   scroll-behavior: smooth;
+  color-scheme: dark;
 }
 
 body {
@@ -434,7 +435,10 @@ input, select, textarea {
 }
 
 input[type="date"] {
-  -webkit-min-logical-width: 0;
+  color-scheme: dark;
+  font-size: 0.95rem;
+  line-height: 1.2;
+  padding: 12px 14px;
 }
 
 input::placeholder, textarea::placeholder {
