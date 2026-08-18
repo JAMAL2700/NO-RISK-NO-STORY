@@ -876,23 +876,22 @@ tr.trade-row:hover {
 }
 
 /* ---------- News: Coin-Picker ---------- */
+/* Grosse, gestapelte Kacheln (eine Spalte, volle Card-Breite) statt kompaktem
+   Grid -- bei 5 Coins muss man dadurch bewusst scrollen koennen, jede Kachel
+   ist genauso prominent wie die Cards in Eingabe/News. */
 .coin-picker {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  gap: 12px;
+  grid-template-columns: 1fr;
+  gap: 14px;
 }
 .coin-picker.hidden {
   display: none;
 }
 
 .coin-tile {
-  aspect-ratio: 16 / 9;
+  height: 120px;
   border: none;
-  border-radius: 14px;
-  color: var(--text);
-  font-size: 1.15rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
+  border-radius: 16px;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -902,6 +901,11 @@ tr.trade-row:hover {
 .coin-tile:hover {
   transform: translateY(-2px);
   background: rgba(255, 255, 255, 0.08);
+}
+
+.coin-tile-logo {
+  width: 64px;
+  height: 64px;
 }
 
 #news-detail.hidden {

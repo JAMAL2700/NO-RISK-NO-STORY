@@ -191,11 +191,11 @@ function switchTab(tabId) {
 // Liest data/news/<coin>.json, geschrieben von der taeglichen GitHub-Action
 // (.github/workflows/news.yml). Kein Live-API-Call im Browser noetig.
 const NEWS_COINS = [
-  { key: "btc", symbol: "BTC" },
-  { key: "eth", symbol: "ETH" },
-  { key: "sol", symbol: "SOL" },
-  { key: "hype", symbol: "HYPE" },
-  { key: "gold", symbol: "XAU" },
+  { key: "btc", symbol: "BTC", logo: "btc" },
+  { key: "eth", symbol: "ETH", logo: "eth" },
+  { key: "sol", symbol: "SOL", logo: "sol" },
+  { key: "hype", symbol: "HYPE", logo: "hype" },
+  { key: "gold", symbol: "XAU", logo: "xau" },
 ];
 
 const coinPicker = document.getElementById("news-coin-picker");
@@ -204,11 +204,13 @@ const newsDetail = document.getElementById("news-detail");
 function loadNewsTab() {
   if (coinPicker.childElementCount > 0) return;
   coinPicker.innerHTML = NEWS_COINS.map(
-    (c) => `<button type="button" class="coin-tile glass reveal" data-coin="${c.key}">${c.symbol}</button>`
+    (c) => `<button type="button" class="coin-tile glass reveal" data-coin="${c.key}" data-symbol="${c.symbol}">
+      <img src="assets/coins/${c.logo}.svg" alt="${c.symbol}" class="coin-tile-logo">
+    </button>`
   ).join("");
   observeReveals();
   coinPicker.querySelectorAll(".coin-tile").forEach((btn) => {
-    btn.addEventListener("click", () => showNewsForCoin(btn.dataset.coin, btn.textContent));
+    btn.addEventListener("click", () => showNewsForCoin(btn.dataset.coin, btn.dataset.symbol));
   });
 }
 
