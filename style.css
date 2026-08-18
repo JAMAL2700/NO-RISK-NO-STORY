@@ -141,22 +141,6 @@ body {
   100% { transform: translateY(-110vh) translateX(var(--drift-x, 40px)); opacity: 0; }
 }
 
-/* ---------- Text-Partikel: Hero-Titel löst sich beim Scrollen auf ---------- */
-.text-particle {
-  position: fixed;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 5;
-  animation-name: textDissolve;
-  animation-timing-function: ease-out;
-  animation-fill-mode: forwards;
-}
-
-@keyframes textDissolve {
-  0% { transform: translate(0, 0) scale(1); opacity: 1; }
-  100% { transform: translate(var(--dx, 0), -180px) scale(0.3); opacity: 0; }
-}
-
 /* ---------- Glass base ---------- */
 .glass {
   background: var(--glass-bg);

@@ -102,52 +102,6 @@ const linePoints = CANDLE_HEIGHTS.map((h, i) => {
 
 chartLine.setAttribute("points", linePoints.join(" "));
 
-// Text-Partikel: Titel & Zitat lösen sich beim Rausscrollen in kleine, farbige
-// Punkte auf, die wie die Hintergrund-Partikel nach oben wegfliegen.
-let textParticlesTriggered = false;
-
-function spawnTextParticles(el) {
-  const rect = el.getBoundingClientRect();
-  const count = 16;
-  for (let i = 0; i < count; i++) {
-    const dot = document.createElement("div");
-    dot.className = "text-particle";
-    const size = 3 + Math.random() * 5;
-    const color = PARTICLE_COLORS[i % PARTICLE_COLORS.length];
-    dot.style.left = `${rect.left + Math.random() * rect.width}px`;
-    dot.style.top = `${rect.top + Math.random() * rect.height}px`;
-    dot.style.width = `${size}px`;
-    dot.style.height = `${size}px`;
-    dot.style.background = color;
-    dot.style.boxShadow = `0 0 ${size * 3}px ${color}`;
-    dot.style.setProperty("--dx", `${(Math.random() - 0.5) * 160}px`);
-    const duration = 1.1 + Math.random() * 0.9;
-    dot.style.animationDuration = `${duration}s`;
-    document.body.appendChild(dot);
-    setTimeout(() => dot.remove(), duration * 1000 + 100);
-  }
-}
-
-// Ein einzelner Buchstabe löst sich an genau seiner Position in einen winzigen Punkt auf
-function spawnCharParticle(span, i) {
-  const rect = span.getBoundingClientRect();
-  const dot = document.createElement("div");
-  dot.className = "text-particle";
-  const size = 2 + Math.random() * 3;
-  const color = PARTICLE_COLORS[i % PARTICLE_COLORS.length];
-  dot.style.left = `${rect.left + rect.width / 2}px`;
-  dot.style.top = `${rect.top + rect.height / 2}px`;
-  dot.style.width = `${size}px`;
-  dot.style.height = `${size}px`;
-  dot.style.background = color;
-  dot.style.boxShadow = `0 0 ${size * 3}px ${color}`;
-  dot.style.setProperty("--dx", `${(Math.random() - 0.5) * 80}px`);
-  const duration = 0.5 + Math.random() * 0.4;
-  dot.style.animationDuration = `${duration}s`;
-  document.body.appendChild(dot);
-  setTimeout(() => dot.remove(), duration * 1000 + 100);
-}
-
 function updateHeroScroll() {
   // *0.5 = Effekt ist schon nach halber Hero-Höhe komplett durch, damit man's früher sieht
   const heroHeight = heroEl.offsetHeight * 0.5;
@@ -163,30 +117,14 @@ function updateHeroScroll() {
   exitRight.style.transform = `translateX(${shift}px)`;
   exitRight.style.opacity = String(Math.max(0, 1 - textP * 1.3));
 
-  // Ab hier fast komplett draußen: Text löst sich in Partikel auf (einmal pro Durchlauf)
-  if (textP > 0.82 && !textParticlesTriggered) {
-    textParticlesTriggered = true;
-    spawnTextParticles(exitLeft);
-    spawnTextParticles(exitRight);
-  }
-  if (textP < 0.4) {
-    textParticlesTriggered = false;
-  }
-
-  // Zitat: löst sich Buchstabe für Buchstabe auf, deutlich schneller fertig als der Titel
+  // Zitat: löst sich Buchstabe für Buchstabe per Fade auf, deutlich schneller fertig als der Titel.
+  // Reines CSS-Transition (siehe .sub-char in style.css) statt Partikel-Spawn pro Buchstabe —
+  // keine getBoundingClientRect()-Aufrufe/DOM-Erzeugung mehr während des Scrollens (war der Ruckler).
   const subP = Math.min(p * 4.5, 1);
   const total = subChars.length;
   subChars.forEach((span, i) => {
     const threshold = i / total;
-    const gone = subP > threshold;
-    if (gone && span.dataset.dissolved !== "1") {
-      span.dataset.dissolved = "1";
-      spawnCharParticle(span, i);
-      span.style.opacity = "0";
-    } else if (!gone && span.dataset.dissolved === "1") {
-      span.dataset.dissolved = "0";
-      span.style.opacity = "1";
-    }
+    span.style.opacity = subP > threshold ? "0" : "1";
   });
 
   // Chart baut sich als Ganzes von unten nach oben auf (Wipe-Reveal statt
