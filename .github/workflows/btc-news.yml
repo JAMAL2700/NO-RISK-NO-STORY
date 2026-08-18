@@ -1,0 +1,35 @@
+name: BTC News taeglich aktualisieren
+
+on:
+  schedule:
+    # 23:00 UTC = 00:00 Berlin (Winterzeit) / 01:00 Berlin (Sommerzeit, DST) --
+    # GitHub Actions Cron kennt keine Zeitzonen, daher kleine Drift im Sommer.
+    - cron: "0 23 * * *"
+  workflow_dispatch: {} # manuell ueber den "Run workflow"-Button testbar
+
+permissions:
+  contents: write
+
+jobs:
+  fetch-news:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Dependencies installieren
+        run: npm install rss-parser
+
+      - name: News abrufen und filtern
+        run: node scripts/fetch-btc-news.mjs
+
+      - name: Aenderungen committen und pushen
+        run: |
+          git config user.name "btc-news-bot"
+          git config user.email "actions@github.com"
+          git add data/btc-news.json
+          git diff --staged --quiet || git commit -m "BTC News Update $(date -u +%Y-%m-%d)"
+          git push

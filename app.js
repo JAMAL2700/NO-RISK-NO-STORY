@@ -182,7 +182,58 @@ function switchTab(tabId) {
     section.classList.toggle("active", section.id === tabId);
   });
   if (tabId === "chart") loadTradingViewWidget();
+  if (tabId === "news") loadNewsTab();
   observeReveals();
+}
+
+// ---------- BTC News ----------
+// Liest data/btc-news.json, geschrieben von der taeglichen GitHub-Action
+// (.github/workflows/btc-news.yml). Kein Live-API-Call im Browser noetig.
+let newsLoaded = false;
+
+async function loadNewsTab() {
+  if (newsLoaded) return;
+  newsLoaded = true;
+  const list = document.getElementById("news-list");
+  try {
+    const res = await fetch("data/btc-news.json", { cache: "no-store" });
+    if (!res.ok) throw new Error("News-Datei nicht gefunden");
+    const days = await res.json();
+    if (!days.length) {
+      list.innerHTML = `<p class="hint">Noch keine News eingetroffen — kommt mit dem nächsten täglichen Update.</p>`;
+      return;
+    }
+    list.innerHTML = days
+      .map(
+        (day) => `
+      <h3 class="news-day-heading">${formatNewsDate(day.date)}</h3>
+      <div class="card glass reveal news-day">
+        ${day.items
+          .map(
+            (item) => `
+          <a class="news-item" href="${item.link}" target="_blank" rel="noopener">
+            <span class="news-item-top">
+              <span class="news-tag">${item.category}</span>
+              <span class="news-source">${item.source}</span>
+            </span>
+            <span class="news-title">${item.title}</span>
+            ${item.summary ? `<span class="news-summary">${item.summary}</span>` : ""}
+          </a>`
+          )
+          .join("")}
+      </div>`
+      )
+      .join("");
+    observeReveals();
+  } catch (err) {
+    list.innerHTML = `<p class="hint">News konnten nicht geladen werden (${err.message}).</p>`;
+    newsLoaded = false;
+  }
+}
+
+function formatNewsDate(isoDate) {
+  const d = new Date(`${isoDate}T00:00:00`);
+  return d.toLocaleDateString("de-DE", { weekday: "long", day: "2-digit", month: "long", year: "numeric" });
 }
 
 // ---------- Live Chart (TradingView) ----------

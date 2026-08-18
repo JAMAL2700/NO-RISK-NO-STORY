@@ -789,6 +789,73 @@ tr.trade-row:hover {
   overflow: hidden;
 }
 
+/* ---------- BTC News ---------- */
+.news-day-heading {
+  margin: 28px 0 10px;
+  font-size: 0.95rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.news-day-heading:first-of-type {
+  margin-top: 0;
+}
+
+.news-day {
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+}
+
+.news-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  text-decoration: none;
+  color: var(--text);
+  transition: background 0.15s ease;
+}
+.news-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+.news-item + .news-item {
+  border-top: 1px solid var(--glass-border);
+}
+
+.news-item-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.75rem;
+}
+
+.news-tag {
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--accent-gradient);
+  color: #050506;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.news-source {
+  color: var(--text-faint);
+}
+
+.news-title {
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.news-summary {
+  font-size: 0.88rem;
+  color: var(--text-dim);
+  line-height: 1.4;
+}
+
 /* ---------- Responsive ---------- */
 @media (min-width: 620px) {
   .field-grid {

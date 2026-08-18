@@ -5,3 +5,6 @@ trading-journal-backup-*.json
 # OS/Editor-Kram
 .DS_Store
 Thumbs.db
+
+# Node-Dependencies fuer scripts/fetch-btc-news.mjs (installiert die GitHub Action selbst)
+node_modules/
