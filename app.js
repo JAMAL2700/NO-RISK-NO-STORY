@@ -352,6 +352,7 @@ form.addEventListener("submit", (e) => {
 
   renderUebersicht();
   renderAuswertung();
+  checkBackupReminder();
 });
 
 function startEditTrade(trade) {
@@ -513,8 +514,9 @@ function closeModal() {
 }
 
 // ---------- Backup: Export / Import ----------
-document.getElementById("export-btn").addEventListener("click", () => {
-  const data = JSON.stringify(loadTrades(), null, 2);
+function doExport() {
+  const trades = loadTrades();
+  const data = JSON.stringify(trades, null, 2);
   const blob = new Blob([data], { type: "application/json" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
@@ -523,6 +525,68 @@ document.getElementById("export-btn").addEventListener("click", () => {
   a.download = `trading-journal-backup-${stamp}.json`;
   a.click();
   URL.revokeObjectURL(url);
+
+  localStorage.setItem("lastBackupMeta", JSON.stringify({ timestamp: Date.now(), tradeCount: trades.length }));
+  localStorage.removeItem("backupSnoozeUntil");
+  checkBackupReminder();
+}
+
+document.getElementById("export-btn").addEventListener("click", doExport);
+
+// ---------- Backup-Reminder ----------
+// Trades liegen NUR in localStorage -- Browserdaten loeschen/Handy wechseln
+// heisst alles weg. Erinnert deshalb von selbst ans Backup, statt drauf zu
+// hoffen dass man dran denkt. Trigger: 10+ neue Trades seit letztem Backup
+// ODER 2+ Wochen seit letztem Backup. "Später" snoozt fuer 3 Tage.
+const TWO_WEEKS_MS = 14 * 24 * 60 * 60 * 1000;
+const THREE_DAYS_MS = 3 * 24 * 60 * 60 * 1000;
+const backupBanner = document.getElementById("backup-reminder");
+
+function getInstalledAt() {
+  let installedAt = Number(localStorage.getItem("installedAt"));
+  if (!installedAt) {
+    installedAt = Date.now();
+    localStorage.setItem("installedAt", String(installedAt));
+  }
+  return installedAt;
+}
+
+function checkBackupReminder() {
+  if (!backupBanner) return;
+  const trades = loadTrades();
+  if (trades.length === 0) {
+    backupBanner.classList.add("hidden");
+    return;
+  }
+
+  const now = Date.now();
+  const snoozeUntil = Number(localStorage.getItem("backupSnoozeUntil") || 0);
+  if (now < snoozeUntil) {
+    backupBanner.classList.add("hidden");
+    return;
+  }
+
+  const meta = JSON.parse(localStorage.getItem("lastBackupMeta") || "null");
+  const tradesSinceBackup = trades.length - (meta ? meta.tradeCount : 0);
+  const timeSinceBackup = now - (meta ? meta.timestamp : getInstalledAt());
+
+  if (tradesSinceBackup >= 10 || timeSinceBackup >= TWO_WEEKS_MS) {
+    const reason =
+      tradesSinceBackup >= 10
+        ? `${tradesSinceBackup} neue Trades seit dem letzten Backup`
+        : "Dein letztes Backup ist über 2 Wochen her";
+    backupBanner.querySelector(".backup-reminder-text").textContent =
+      `${reason} — deine Trades liegen nur auf diesem Gerät. Kurz sichern?`;
+    backupBanner.classList.remove("hidden");
+  } else {
+    backupBanner.classList.add("hidden");
+  }
+}
+
+backupBanner?.querySelector(".backup-reminder-now")?.addEventListener("click", doExport);
+backupBanner?.querySelector(".backup-reminder-later")?.addEventListener("click", () => {
+  localStorage.setItem("backupSnoozeUntil", String(Date.now() + THREE_DAYS_MS));
+  backupBanner.classList.add("hidden");
 });
 
 const importBtn = document.getElementById("import-btn");
@@ -548,6 +612,7 @@ importFile.addEventListener("change", () => {
       saveTrades([...existing, ...neu]);
       renderUebersicht();
       renderAuswertung();
+      checkBackupReminder();
 
       importMsg.textContent = `${neu.length} Trade(s) importiert ✓`;
     } catch (err) {
@@ -685,4 +750,5 @@ function renderEquity(trades) {
 // ---------- Init ----------
 renderUebersicht();
 renderAuswertung();
+checkBackupReminder();
 observeReveals();
