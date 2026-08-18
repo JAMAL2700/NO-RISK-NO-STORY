@@ -442,6 +442,17 @@ input[type="date"] {
   line-height: 1.2;
   padding: 12px 14px;
   min-height: 0;
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+input[type="date"]::-webkit-date-and-time-value {
+  text-align: left;
+  min-width: 0;
 }
 
 input::placeholder, textarea::placeholder {

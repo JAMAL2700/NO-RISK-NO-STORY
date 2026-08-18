@@ -497,6 +497,18 @@ const cancelEditBtn = document.getElementById("cancel-edit-btn");
 
 let editingId = null;
 
+function setDefaultDatum() {
+  const datumInput = document.getElementById("datum");
+  if (datumInput && !datumInput.value) {
+    const heute = new Date();
+    const yyyy = heute.getFullYear();
+    const mm = String(heute.getMonth() + 1).padStart(2, "0");
+    const dd = String(heute.getDate()).padStart(2, "0");
+    datumInput.value = `${yyyy}-${mm}-${dd}`;
+  }
+}
+setDefaultDatum();
+
 form.addEventListener("submit", (e) => {
   e.preventDefault();
 
