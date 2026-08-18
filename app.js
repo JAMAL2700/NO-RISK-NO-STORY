@@ -483,9 +483,9 @@ form.addEventListener("submit", (e) => {
     pnl: document.getElementById("pnl").value
       ? parseFloat(document.getElementById("pnl").value)
       : null,
-    setup: document.getElementById("setup").value,
-    risiko: document.getElementById("risiko").value
-      ? parseFloat(document.getElementById("risiko").value)
+    setup: document.getElementById("setup").value.trim(),
+    crv: document.getElementById("crv").value
+      ? parseFloat(document.getElementById("crv").value)
       : null,
     emotion: document.getElementById("emotion").value,
     notiz: document.getElementById("notiz").value.trim(),
@@ -528,7 +528,7 @@ function startEditTrade(trade) {
   document.getElementById("ergebnis").value = trade.ergebnis;
   document.getElementById("pnl").value = trade.pnl ?? "";
   document.getElementById("setup").value = trade.setup;
-  document.getElementById("risiko").value = trade.risiko ?? "";
+  document.getElementById("crv").value = trade.crv ?? "";
   document.getElementById("emotion").value = trade.emotion;
   document.getElementById("notiz").value = trade.notiz || "";
 
@@ -570,11 +570,25 @@ const filterSetup = document.getElementById("filter-setup");
 searchInput.addEventListener("input", renderUebersicht);
 filterSetup.addEventListener("change", renderUebersicht);
 
+function updateSetupFilterOptions(allTrades) {
+  const current = filterSetup.value;
+  const setups = [...new Set(allTrades.map((t) => t.setup).filter(Boolean))].sort((a, b) =>
+    a.localeCompare(b, "de")
+  );
+  filterSetup.innerHTML =
+    `<option value="">Alle Setups</option>` +
+    setups.map((s) => `<option value="${s}">${s}</option>`).join("");
+  if (setups.includes(current)) filterSetup.value = current;
+}
+
 function renderUebersicht() {
+  const allTrades = loadTrades();
+  updateSetupFilterOptions(allTrades);
+
   const search = searchInput.value.trim().toLowerCase();
   const setupFilter = filterSetup.value;
 
-  let trades = loadTrades().sort((a, b) => b.id - a.id);
+  let trades = allTrades.sort((a, b) => b.id - a.id);
 
   if (search) {
     trades = trades.filter(
@@ -658,7 +672,7 @@ function openModal(trade) {
       <dt>Einstieg / Ausstieg</dt><dd>${trade.einstieg} → ${trade.ausstieg}</dd>
       <dt>Ergebnis</dt><dd class="result-${trade.ergebnis.toLowerCase()}">${trade.ergebnis}${trade.pnl !== null ? ` (${trade.pnl})` : ""}</dd>
       <dt>Setup</dt><dd>${trade.setup}</dd>
-      <dt>Risiko</dt><dd>${trade.risiko !== null ? trade.risiko + "%" : "–"}</dd>
+      <dt>CRV</dt><dd>${trade.crv !== null ? "1:" + trade.crv : "–"}</dd>
       <dt>Emotion</dt><dd>${trade.emotion}</dd>
       <dt>Notiz</dt><dd>${trade.notiz || "–"}</dd>
     </dl>
@@ -810,13 +824,11 @@ function renderAuswertung() {
   const winrate = ((wins / trades.length) * 100).toFixed(1);
   statWinrate.textContent = `${winrate}%`;
 
-  // Ø Risk/Reward: Abstand Einstieg->Ausstieg relativ zum Risiko, grobe Annäherung
-  const rrValues = trades
-    .filter((t) => t.risiko && t.risiko > 0)
-    .map((t) => Math.abs(t.ausstieg - t.einstieg) / t.risiko);
+  // Ø CRV: direkt aus dem eingetragenen Chance-Risiko-Verhältnis, kein Schaetzwert mehr
+  const crvValues = trades.filter((t) => t.crv && t.crv > 0).map((t) => t.crv);
   statRR.textContent =
-    rrValues.length > 0
-      ? (rrValues.reduce((a, b) => a + b, 0) / rrValues.length).toFixed(2)
+    crvValues.length > 0
+      ? "1:" + (crvValues.reduce((a, b) => a + b, 0) / crvValues.length).toFixed(2)
       : "–";
 
   // Winrate pro Setup
