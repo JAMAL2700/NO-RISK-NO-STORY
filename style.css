@@ -435,10 +435,13 @@ input, select, textarea {
 }
 
 input[type="date"] {
+  -webkit-appearance: none;
+  appearance: none;
   color-scheme: dark;
   font-size: 0.95rem;
   line-height: 1.2;
   padding: 12px 14px;
+  min-height: 0;
 }
 
 input::placeholder, textarea::placeholder {
