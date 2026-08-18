@@ -47,9 +47,13 @@ function isExcluded(text) {
   return EXCLUDE_PATTERNS.some((p) => p.test(text));
 }
 
+// Keine "Markt"-Restkategorie mehr: was in keine der drei Kategorien faellt
+// (reine Kursmeldungen, Live-Ticker, Chart-/TA-Talk), wird komplett verworfen
+// statt als Grundrauschen mit reinzurutschen. Entscheidung 18.08.2026 nach
+// erster Qualitaets-Probe -- siehe Projekt-Notiz.
 function categorize(text) {
   const hit = CATEGORIES.find((c) => c.pattern.test(text));
-  return hit ? hit.key : "Markt";
+  return hit ? hit.key : null;
 }
 
 async function loadExisting() {
@@ -78,13 +82,15 @@ async function main() {
         const text = `${item.title ?? ""} ${item.contentSnippet ?? ""}`;
         if (!isBtcRelevant(text) || isExcluded(text)) continue;
         if (!item.link || seenLinks.has(item.link)) continue;
+        const category = categorize(text);
+        if (!category) continue; // faellt in keine der drei Kategorien -> Grundrauschen, raus
         seenLinks.add(item.link);
         allItems.push({
           title: item.title?.trim() ?? "",
           link: item.link,
           source: feed.name,
           published: item.isoDate ?? item.pubDate ?? null,
-          category: categorize(text),
+          category,
           summary: (item.contentSnippet ?? "").trim().slice(0, 220),
         });
       }
