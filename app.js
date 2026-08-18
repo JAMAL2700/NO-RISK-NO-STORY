@@ -183,6 +183,7 @@ function switchTab(tabId) {
   });
   if (tabId === "chart") loadTradingViewWidget();
   if (tabId === "news") loadNewsTab();
+  if (tabId === "muster") loadMusterTab();
   observeReveals();
 }
 
@@ -234,6 +235,167 @@ async function loadNewsTab() {
 function formatNewsDate(isoDate) {
   const d = new Date(`${isoDate}T00:00:00`);
   return d.toLocaleDateString("de-DE", { weekday: "long", day: "2-digit", month: "long", year: "numeric" });
+}
+
+// ---------- Chart- & Candlestick-Muster ----------
+// Eigene SVG-Mini-Charts statt Screenshots -- passt zum Liquid-Glass-Design
+// und faerbt bullisch/baerisch mit den gleichen Farben wie der Rest der App
+// (--win / --loss). Inhalt basiert auf Jamals eigenen Trading-Notizen.
+
+// Candle-Bausatz: jede Kerze hat wick[y1,y2] und body[y1,y2] auf einer
+// 0(oben)-80(unten) Skala, color: "win" | "loss" | "neutral"
+function candleSvg(candles) {
+  const slot = 34;
+  const w = candles.length * slot;
+  const cx = (i) => i * slot + slot / 2;
+  const parts = candles
+    .map((c, i) => {
+      const color = c.color === "win" ? "var(--win)" : c.color === "loss" ? "var(--loss)" : "var(--text-dim)";
+      const [wy1, wy2] = c.wick;
+      const [by1, by2] = c.body;
+      const bodyH = Math.max(by2 - by1, 2);
+      return `
+        <line x1="${cx(i)}" y1="${wy1}" x2="${cx(i)}" y2="${wy2}" stroke="${color}" stroke-width="2"/>
+        <rect x="${cx(i) - 6}" y="${by1}" width="12" height="${bodyH}" fill="${color}" rx="1.5"/>
+      `;
+    })
+    .join("");
+  return `<svg class="muster-svg" viewBox="0 0 ${w} 80" preserveAspectRatio="xMidYMid meet">${parts}</svg>`;
+}
+
+// Chart-Formationen als einfache Linien-Sparkline, Punkte auf 0-100 x / 0-60 y
+function lineSvg(points) {
+  const pts = points.map(([x, y]) => `${x},${y}`).join(" ");
+  return `<svg class="muster-svg" viewBox="0 0 100 60" preserveAspectRatio="xMidYMid meet">
+    <polyline points="${pts}" fill="none" stroke="url(#muster-gradient)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+  </svg>`;
+}
+
+const MUSTER_GRADIENT_DEFS = `
+  <svg width="0" height="0" style="position:absolute">
+    <defs>
+      <linearGradient id="muster-gradient" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="#8b5cf6"/>
+        <stop offset="100%" stop-color="#22d3ee"/>
+      </linearGradient>
+    </defs>
+  </svg>`;
+
+const MUSTER_KATEGORIEN = [
+  {
+    title: "Candlestick-Muster",
+    intro: "Eine bis drei Kerzen, die dir zeigen wer gerade gewinnt: Käufer oder Verkäufer.",
+    patterns: [
+      { name: "Doji", desc: "Unentschlossenheit, potenzielle Trendwende — Eröffnung und Schluss fast identisch.", svg: candleSvg([{ wick: [8, 72], body: [38, 42], color: "neutral" }]) },
+      { name: "Hammer", desc: "Bullische Umkehr am Boden — kleiner Körper oben, langer Docht unten.", svg: candleSvg([{ wick: [12, 72], body: [12, 28], color: "win" }]) },
+      { name: "Hanging Man", desc: "Bärische Umkehr nach Aufwärtstrend — gleiche Form wie der Hammer, aber am Top statt am Boden.", svg: candleSvg([{ wick: [12, 72], body: [12, 28], color: "loss" }]) },
+      { name: "Inverted Hammer", desc: "Bullische Umkehr nach Abwärtstrend — langer Docht oben, kleiner Körper unten.", svg: candleSvg([{ wick: [8, 68], body: [52, 68], color: "win" }]) },
+      { name: "Shooting Star", desc: "Bärische Umkehr nach Aufwärtstrend — gleiche Form wie Inverted Hammer, aber am Top.", svg: candleSvg([{ wick: [8, 68], body: [52, 68], color: "loss" }]) },
+      { name: "Bullish Engulfing", desc: "Bullische Umkehr — grüne Kerze umschließt die vorherige rote komplett.", svg: candleSvg([{ wick: [28, 50], body: [32, 46], color: "loss" }, { wick: [10, 72], body: [14, 68], color: "win" }]) },
+      { name: "Bearish Engulfing", desc: "Bärische Umkehr — rote Kerze umschließt die vorherige grüne komplett.", svg: candleSvg([{ wick: [28, 50], body: [32, 46], color: "win" }, { wick: [10, 72], body: [14, 68], color: "loss" }]) },
+      { name: "Morning Star", desc: "Bullische 3-Kerzen-Umkehr — großer roter Fall, kleine Unentschlossenheit, starke grüne Erholung.", svg: candleSvg([{ wick: [8, 48], body: [12, 44], color: "loss" }, { wick: [50, 66], body: [56, 60], color: "neutral" }, { wick: [12, 72], body: [18, 66], color: "win" }]) },
+      { name: "Evening Star", desc: "Bärische 3-Kerzen-Umkehr — großer grüner Anstieg, kleine Unentschlossenheit, starker roter Fall.", svg: candleSvg([{ wick: [32, 72], body: [36, 68], color: "win" }, { wick: [14, 30], body: [20, 24], color: "neutral" }, { wick: [8, 68], body: [14, 62], color: "loss" }]) },
+      { name: "Piercing Line", desc: "Bullische 2-Kerzen-Umkehr — grüne Kerze durchbricht mehr als 50% der vorherigen roten.", svg: candleSvg([{ wick: [8, 58], body: [12, 54], color: "loss" }, { wick: [30, 72], body: [34, 68], color: "win" }]) },
+      { name: "Dark Cloud Cover", desc: "Bärische 2-Kerzen-Umkehr — rote Kerze durchbricht mehr als 50% der vorherigen grünen.", svg: candleSvg([{ wick: [22, 72], body: [26, 68], color: "win" }, { wick: [8, 50], body: [12, 46], color: "loss" }]) },
+      { name: "Three White Soldiers", desc: "Starke bullische Fortsetzung — drei aufeinanderfolgende grüne Kerzen mit höheren Hochs.", svg: candleSvg([{ wick: [50, 70], body: [54, 66], color: "win" }, { wick: [34, 56], body: [38, 52], color: "win" }, { wick: [18, 42], body: [22, 38], color: "win" }]) },
+      { name: "Three Black Crows", desc: "Starke bärische Fortsetzung — drei aufeinanderfolgende rote Kerzen mit tieferen Tiefs.", svg: candleSvg([{ wick: [10, 30], body: [14, 26], color: "loss" }, { wick: [24, 46], body: [28, 42], color: "loss" }, { wick: [38, 62], body: [42, 58], color: "loss" }]) },
+      { name: "Harami (Bullish/Bearish)", desc: "Trendwende-Signal — kleine Kerze liegt komplett innerhalb des Körpers der vorherigen großen Kerze.", svg: candleSvg([{ wick: [8, 72], body: [14, 66], color: "loss" }, { wick: [32, 48], body: [36, 44], color: "win" }]) },
+    ],
+  },
+  {
+    title: "Klassische Chart-Patterns",
+    patterns: [
+      { name: "Head and Shoulders", desc: "Trendwendemuster, kündigt einen Abwärtstrend an.", svg: lineSvg([[5, 40], [22, 15], [38, 32], [50, 5], [62, 32], [78, 15], [95, 40]]) },
+      { name: "Inverse Head and Shoulders", desc: "Umgekehrte Version, kündigt einen Aufwärtstrend an.", svg: lineSvg([[5, 20], [22, 45], [38, 28], [50, 55], [62, 28], [78, 45], [95, 20]]) },
+      { name: "Double Top", desc: "Zwei Hochpunkte, oft gefolgt von Abwärtstrend.", svg: lineSvg([[5, 45], [28, 10], [50, 35], [72, 10], [95, 45]]) },
+      { name: "Double Bottom", desc: "Zwei Tiefpunkte, gefolgt von Aufwärtstrend.", svg: lineSvg([[5, 15], [28, 50], [50, 25], [72, 50], [95, 15]]) },
+      { name: "Triple Top", desc: "Drei Hochpunkte, starker Widerstand.", svg: lineSvg([[5, 45], [20, 12], [38, 32], [53, 12], [68, 32], [83, 12], [95, 45]]) },
+      { name: "Triple Bottom", desc: "Drei Tiefpunkte, starker Support.", svg: lineSvg([[5, 15], [20, 48], [38, 28], [53, 48], [68, 28], [83, 48], [95, 15]]) },
+      { name: "Cup and Handle", desc: "Bullishes Fortsetzungsmuster — rundes Tief, dann kleine Konsolidierung, dann Ausbruch.", svg: lineSvg([[5, 20], [25, 48], [50, 52], [75, 20], [83, 32], [90, 26], [95, 10]]) },
+      { name: "Inverse Cup and Handle", desc: "Bearishes Fortsetzungsmuster, Spiegelbild vom Cup and Handle.", svg: lineSvg([[5, 40], [25, 12], [50, 8], [75, 40], [83, 28], [90, 34], [95, 50]]) },
+      { name: "Rounding Bottom (Saucer)", desc: "Langsamer Übergang von Abwärts- zu Aufwärtstrend.", svg: lineSvg([[5, 15], [25, 40], [50, 50], [75, 40], [95, 15]]) },
+      { name: "Rounding Top", desc: "Umgekehrte Variante, kündigt Schwäche an.", svg: lineSvg([[5, 45], [25, 20], [50, 10], [75, 20], [95, 45]]) },
+    ],
+  },
+  {
+    title: "Dreiecke & Keile",
+    patterns: [
+      { name: "Ascending Triangle", desc: "Bullisches Fortsetzungsmuster — flacher Widerstand oben, steigende Tiefs.", svg: lineSvg([[5, 12], [25, 40], [45, 12], [65, 30], [85, 12], [95, 20]]) },
+      { name: "Descending Triangle", desc: "Bearishes Fortsetzungsmuster — flacher Support unten, fallende Hochs.", svg: lineSvg([[5, 48], [25, 20], [45, 48], [65, 30], [85, 48], [95, 40]]) },
+      { name: "Symmetrical Triangle", desc: "Konsolidierung, Ausbruch in beide Richtungen möglich.", svg: lineSvg([[5, 10], [25, 45], [40, 20], [55, 38], [70, 26], [85, 33], [95, 30]]) },
+      { name: "Rising Wedge", desc: "Meist bearish — beide Trendlinien steigen, laufen aber zusammen.", svg: lineSvg([[5, 50], [25, 30], [40, 42], [55, 20], [70, 32], [85, 12], [95, 20]]) },
+      { name: "Falling Wedge", desc: "Meist bullish — beide Trendlinien fallen, laufen aber zusammen.", svg: lineSvg([[5, 10], [25, 30], [40, 18], [55, 40], [70, 28], [85, 48], [95, 40]]) },
+    ],
+  },
+  {
+    title: "Rechtecke & Kanäle",
+    patterns: [
+      { name: "Rectangle", desc: "Seitwärtsbewegung zwischen Support und Resistance.", svg: lineSvg([[5, 15], [25, 45], [45, 15], [65, 45], [85, 15], [95, 30]]) },
+      { name: "Channel Up", desc: "Aufwärtstrend in parallelem Kanal.", svg: lineSvg([[5, 50], [25, 35], [40, 42], [55, 25], [70, 32], [85, 12], [95, 20]]) },
+      { name: "Channel Down", desc: "Abwärtstrend in parallelem Kanal.", svg: lineSvg([[5, 10], [25, 25], [40, 18], [55, 35], [70, 28], [85, 48], [95, 40]]) },
+      { name: "Horizontal Channel", desc: "Seitwärtstrend zwischen zwei parallelen Linien.", svg: lineSvg([[5, 20], [25, 42], [45, 20], [65, 42], [85, 20], [95, 30]]) },
+    ],
+  },
+  {
+    title: "Fortsetzungsmuster",
+    patterns: [
+      { name: "Flag (Bullish)", desc: "Kleine Korrektur nach starkem Aufwärtstrend, dann Fortsetzung.", svg: lineSvg([[5, 55], [25, 10], [40, 20], [55, 15], [70, 25], [85, 20], [95, 5]]) },
+      { name: "Flag (Bearish)", desc: "Kleine Korrektur nach starkem Abwärtstrend, dann Fortsetzung.", svg: lineSvg([[5, 5], [25, 50], [40, 40], [55, 45], [70, 35], [85, 40], [95, 55]]) },
+      { name: "Pennant (Bullish)", desc: "Mini-Dreieck nach starkem Anstieg.", svg: lineSvg([[5, 55], [25, 10], [40, 22], [55, 30], [70, 25], [85, 28], [95, 5]]) },
+      { name: "Pennant (Bearish)", desc: "Mini-Dreieck nach starkem Fall.", svg: lineSvg([[5, 5], [25, 50], [40, 38], [55, 30], [70, 35], [85, 32], [95, 55]]) },
+      { name: "Rising Three Methods", desc: "Bullisches Fortsetzungsmuster — Aufwärtstrendpause, Trend setzt sich fort." },
+      { name: "Falling Three Methods", desc: "Bearishes Fortsetzungsmuster — Abwärtstrendpause, Trend setzt sich fort." },
+    ],
+  },
+  {
+    title: "Umkehrformationen",
+    patterns: [
+      { name: "Island Reversal", desc: "Abrupte Umkehr durch Gaps auf beiden Seiten einer kleinen Konsolidierung." },
+      { name: "Spike (V-Top)", desc: "Plötzliche Umkehr nach starkem Anstieg.", svg: lineSvg([[5, 45], [40, 10], [50, 5], [60, 10], [95, 45]]) },
+      { name: "Spike (V-Bottom)", desc: "Plötzliche Umkehr nach starkem Fall.", svg: lineSvg([[5, 15], [40, 50], [50, 55], [60, 50], [95, 15]]) },
+      { name: "Bump and Run Reversal", desc: "Übertreibung (steiler Anstieg) gefolgt von Umkehr." },
+      { name: "Diamond Top", desc: "Komplexes Umkehrmuster (bearish) — erst breiter werdende, dann enger werdende Schwankungen." },
+      { name: "Diamond Bottom", desc: "Komplexes Umkehrmuster (bullish), Spiegelbild vom Diamond Top." },
+    ],
+  },
+  {
+    title: "Harmonic Patterns",
+    intro: "Trendwendemuster nach exakten Fibonacci-Verhältnissen — fortgeschritten, eher was für später.",
+    patterns: [
+      { name: "Gartley Pattern", desc: "Trendwendemuster nach klassischen Fibonacci-Zonen." },
+      { name: "Bat Pattern", desc: "Harmonisches Muster mit engeren Fibonacci-Zonen als Gartley." },
+      { name: "Butterfly Pattern", desc: "Erweiterte Umkehrformation, geht über den Ausgangspunkt hinaus." },
+      { name: "Crab Pattern", desc: "Tiefere Fibonacci-Erweiterung als Butterfly." },
+      { name: "Shark Pattern", desc: "Neueres harmonisches Muster mit eigenen Fibonacci-Ratios." },
+    ],
+  },
+];
+
+let musterLoaded = false;
+
+function loadMusterTab() {
+  if (musterLoaded) return;
+  musterLoaded = true;
+  const list = document.getElementById("muster-list");
+  const html = MUSTER_KATEGORIEN.map(
+    (kat) => `
+    <h3 class="muster-kat-heading">${kat.title}</h3>
+    ${kat.intro ? `<p class="hint muster-kat-intro">${kat.intro}</p>` : ""}
+    <div class="muster-grid">
+      ${kat.patterns
+        .map(
+          (p) => `
+        <div class="card glass reveal muster-card">
+          ${p.svg ? `<div class="muster-svg-wrap">${p.svg}</div>` : ""}
+          <h4 class="muster-name">${p.name}</h4>
+          <p class="muster-desc">${p.desc}</p>
+        </div>`
+        )
+        .join("")}
+    </div>`
+  ).join("");
+  list.innerHTML = MUSTER_GRADIENT_DEFS + html;
+  observeReveals();
 }
 
 // ---------- Live Chart (TradingView) ----------
