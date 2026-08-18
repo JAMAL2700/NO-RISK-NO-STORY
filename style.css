@@ -306,11 +306,17 @@ body {
   top: 16px;
   z-index: 20;
   margin-bottom: 28px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.tabs::-webkit-scrollbar {
+  display: none;
 }
 
 .tab-btn {
-  flex: 1;
-  padding: 12px;
+  flex: 1 0 auto;
+  padding: 12px 14px;
   background: transparent;
   border: none;
   color: var(--text-dim);
@@ -319,6 +325,7 @@ body {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
+  white-space: nowrap;
   cursor: pointer;
   transition: background .3s ease, color .3s ease;
 }
