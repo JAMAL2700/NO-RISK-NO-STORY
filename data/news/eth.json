@@ -1,1 +1,31 @@
-[]
+[
+  {
+    "date": "2026-08-19",
+    "items": [
+      {
+        "title": "Ethereum’s next upgrade breaks the '21,000 gas' rule wallets rely on",
+        "link": "https://www.coindesk.com/tech/2026/08/18/ethereum-s-next-upgrade-breaks-the-21-000-gas-rule-wallets-rely-on",
+        "source": "CoinDesk",
+        "published": "2026-08-18T12:17:05.000Z",
+        "category": "Projekt-News",
+        "summary": "Sending ETH to a brand-new address will cost more than sending to an existing one, and software built around a flat fee will get the sum wrong."
+      },
+      {
+        "title": "Ethereum Foundation warns some tools may break with Glamsterdam upgrade",
+        "link": "https://cointelegraph.com/news/ethereum-foundation-warns-some-tools-may-break-with-glamsterdam-upgrade?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+        "source": "Cointelegraph",
+        "published": "2026-08-18T05:12:18.000Z",
+        "category": "Projekt-News",
+        "summary": "Developers have been urged to test on Plataberget before Glamsterdam’s new gas model reaches Ethereum’s other testnets and mainnet."
+      },
+      {
+        "title": "Ethereum Developers Target Privacy Changes in Next Major Upgrade",
+        "link": "https://decrypt.co/375787/ethereum-developers-privacy-hegota-upgrade",
+        "source": "Decrypt",
+        "published": "2026-08-17T18:19:46.000Z",
+        "category": "Projekt-News",
+        "summary": "A proposed package would let privacy pools pay their own transaction fees without relying on intermediaries."
+      }
+    ]
+  }
+]
