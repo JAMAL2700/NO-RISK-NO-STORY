@@ -2,10 +2,15 @@ name: Asset-News taeglich aktualisieren
 
 on:
   schedule:
-    # 23:00 UTC = 00:00 Berlin (Winterzeit) / 01:00 Berlin (Sommerzeit, DST) --
-    # GitHub Actions Cron kennt keine Zeitzonen, daher kleine Drift im Sommer.
-    - cron: "0 23 * * *"
-  workflow_dispatch: {} # manuell ueber den "Run workflow"-Button testbar
+    # GitHub Actions Cron kennt keine Zeitzonen (nur UTC) und Berlin wechselt
+    # zwischen CET (UTC+1) und CEST (UTC+2, Sommerzeit) -- ein einzelner
+    # Cron-Zeitpunkt driftet also je nach Jahreszeit eine Stunde. Deshalb zwei
+    # Trigger (fuer beide moeglichen Offsets), der "Nur um echte Berliner
+    # Mitternacht"-Check unten sorgt dafuer, dass nur der jeweils richtige
+    # wirklich News holt und committet -- ganzjaehrig ohne manuelles Nachjustieren.
+    - cron: "0 22 * * *" # 22:00 UTC = 00:00 Berlin waehrend Sommerzeit (CEST)
+    - cron: "0 23 * * *" # 23:00 UTC = 00:00 Berlin waehrend Winterzeit (CET)
+  workflow_dispatch: {} # manuell ueber den "Run workflow"-Button testbar, laeuft immer sofort
 
 permissions:
   contents: write
@@ -14,19 +19,39 @@ jobs:
   fetch-news:
     runs-on: ubuntu-latest
     steps:
+      - name: Nur um echte Berliner Mitternacht wirklich laufen (bei manuellem Trigger immer)
+        id: zeitcheck
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          else
+            HOUR=$(TZ="Europe/Berlin" date +%H)
+            echo "Berlin-Stunde gerade: $HOUR"
+            if [ "$HOUR" = "00" ]; then
+              echo "run=true" >> "$GITHUB_OUTPUT"
+            else
+              echo "run=false" >> "$GITHUB_OUTPUT"
+            fi
+          fi
+
       - uses: actions/checkout@v4
+        if: steps.zeitcheck.outputs.run == 'true'
 
       - uses: actions/setup-node@v4
+        if: steps.zeitcheck.outputs.run == 'true'
         with:
           node-version: 20
 
       - name: Dependencies installieren
+        if: steps.zeitcheck.outputs.run == 'true'
         run: npm install rss-parser
 
       - name: News abrufen und filtern (BTC, ETH, SOL, HYPE, GOLD)
+        if: steps.zeitcheck.outputs.run == 'true'
         run: node scripts/fetch-news.mjs
 
       - name: Aenderungen committen und pushen
+        if: steps.zeitcheck.outputs.run == 'true'
         run: |
           git config user.name "news-bot"
           git config user.email "actions@github.com"
