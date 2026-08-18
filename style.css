@@ -1018,11 +1018,13 @@ tr.trade-row:hover {
 
 @media (max-width: 619px) {
   .hero-title {
-    font-size: clamp(3rem, 13vw, 5.5rem);
+    font-size: clamp(3.4rem, 15vw, 5.5rem);
   }
 
   .hero-sub {
-    font-size: 0.85rem;
-    max-width: 320px;
+    font-size: 0.72rem;
+    max-width: 280px;
+    letter-spacing: 0.01em;
+    line-height: 1.6;
   }
 }
