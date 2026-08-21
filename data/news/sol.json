@@ -1,5 +1,26 @@
 [
   {
+    "date": "2026-08-22",
+    "items": [
+      {
+        "title": "Solana Just Got Faster—Is It Bullish for SOL?",
+        "link": "https://decrypt.co/376245/solana-faster-bullish-sol-price",
+        "source": "Decrypt",
+        "published": "2026-08-21T18:45:01.000Z",
+        "category": "Projekt-News",
+        "summary": "Solana has activated the first reduction in its block timing since launch, speeding up transactions on the network."
+      },
+      {
+        "title": "Solana cuts blockchain slot time to 350 milliseconds",
+        "link": "https://cointelegraph.com/news/solana-cuts-blockchain-slot-time-350-milliseconds?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+        "source": "Cointelegraph",
+        "published": "2026-08-21T13:45:13.000Z",
+        "category": "Projekt-News",
+        "summary": "Solana reduced its slot time for the first time since genesis as it works toward a 200-millisecond target aimed at reducing network latency."
+      }
+    ]
+  },
+  {
     "date": "2026-08-20",
     "items": [
       {
