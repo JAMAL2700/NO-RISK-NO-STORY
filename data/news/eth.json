@@ -1,5 +1,34 @@
 [
   {
+    "date": "2026-08-29",
+    "items": [
+      {
+        "title": "OneKey reproduces transaction replacement attack on outdated Ledger Ethereum app",
+        "link": "https://cointelegraph.com/news/onekey-transaction-replacement-attack-old-version-ledger?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+        "source": "Cointelegraph",
+        "published": "2026-08-28T08:21:16.000Z",
+        "category": "On-Chain & Marktstruktur",
+        "summary": "OneKey said it reproduced an exploit against an older version of the Ledger app in its lab environment, which Ledger fixed in its Ethereum app 1.22.2, with no user funds lost."
+      },
+      {
+        "title": "The Sandbox pledges 1:1 repayment after $700K bridge exploit",
+        "link": "https://cointelegraph.com/news/the-sandbox-compensation-sand-bridge-exploit?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+        "source": "Cointelegraph",
+        "published": "2026-08-28T05:40:48.000Z",
+        "category": "On-Chain & Marktstruktur",
+        "summary": "Eligible holders on Base and BNB Chain will receive Ethereum-based SAND from the project’s treasury, with claims expected to open within two weeks."
+      },
+      {
+        "title": "No, Ledger Wasn’t Hacked: Vulnerable Ethereum App Was Patched Before Exploit, Company Says",
+        "link": "https://decrypt.co/376750/no-ledger-wasnt-hacked-ethereum-app-exploit",
+        "source": "Decrypt",
+        "published": "2026-08-27T18:16:03.000Z",
+        "category": "On-Chain & Marktstruktur",
+        "summary": "OneKey demonstrated how an outdated Ethereum app could sign a transaction different from the one shown on a Ledger device, but the wallet maker says the vulnerability had already been fixed."
+      }
+    ]
+  },
+  {
     "date": "2026-08-25",
     "items": [
       {

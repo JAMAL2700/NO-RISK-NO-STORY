@@ -1,5 +1,106 @@
 [
   {
+    "date": "2026-08-29",
+    "items": [
+      {
+        "title": "Bitcoin Rally Stalls, But Long-Term Sentiment Remains Bullish",
+        "link": "https://decrypt.co/376846/bitcoin-rally-stalls-sentiment-bullish",
+        "source": "Decrypt",
+        "published": "2026-08-28T21:16:04.000Z",
+        "category": "Makro & Regulierung",
+        "summary": "BTC gave back some of its gains after Fed Chair Kevin Warsh talked tough on inflation, but prediction market traders are still leaning bullish."
+      },
+      {
+        "title": "Bitcoin Miner IREN Shares Fall as AI Conversion Costs Mount",
+        "link": "https://decrypt.co/376816/bitcoin-miner-iren-shares-drop-ai-costs",
+        "source": "Decrypt",
+        "published": "2026-08-28T16:04:37.000Z",
+        "category": "Projekt-News",
+        "summary": "AI cloud revenue topped Bitcoin mining for the first time as IREN accelerated its data center conversion."
+      },
+      {
+        "title": "Bitcoin dips to $78.4K as Fed’s Warsh downplays softer inflation prints",
+        "link": "https://cointelegraph.com/markets/bitcoin-dips-fed-warsh-dismisses-recent-low-inflation-prints?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+        "source": "Cointelegraph",
+        "published": "2026-08-28T15:31:25.000Z",
+        "category": "Makro & Regulierung",
+        "summary": "Bitcoin failed to make a decisive break above $80,000 as traders digested Fed Chair Kevin Warsh’s Jackson Hole keynote speech, which remained wary of US inflation trends."
+      },
+      {
+        "title": "Bitcoin Traders Watch Fed Chair Warsh for Clues—And Get Nothing",
+        "link": "https://decrypt.co/376813/bitcoin-traders-watch-fed-chair-warsh-for-clues-and-get-nothing",
+        "source": "Decrypt",
+        "published": "2026-08-28T15:14:11.000Z",
+        "category": "Makro & Regulierung",
+        "summary": "Fed Chair Warsh's first Jackson Hole keynote doubled down on giving markets zero rate hints as inflation runs hot and Bitcoin traders wait on September's call."
+      },
+      {
+        "title": "Live updates: Bitcoin slides below $78,000 as markets digest Warsh's hawkish remarks",
+        "link": "https://www.coindesk.com/business/2026/08/28/live-updates-bitcoin-options-worth-usd6-4-billion-just-expired-as-prices-hover-near-usd80-000",
+        "source": "CoinDesk",
+        "published": "2026-08-28T09:09:07.000Z",
+        "category": "Makro & Regulierung",
+        "summary": "\"We have work to do,\" on prices, said Warsh in his highly anticipated keynote address at the Kansas City Fed's annual symposium."
+      },
+      {
+        "title": "Here’s why Warsh’s Jackson Hole speech is a major event for bitcoin and gold",
+        "link": "https://www.coindesk.com/markets/2026/08/28/here-s-why-warsh-s-jackson-hole-speech-is-a-major-event-for-bitcoin-and-gold",
+        "source": "CoinDesk",
+        "published": "2026-08-28T06:30:10.000Z",
+        "category": "Makro & Regulierung",
+        "summary": "Warsh’s Jackson Hole speech could shape expectations for Fed support of Treasury buybacks, with implications for bitcoin, gold and long-term yields."
+      },
+      {
+        "title": "Bitcoin Completes First Experimental Quantum-Safe Transaction, Starkware Says",
+        "link": "https://decrypt.co/376767/bitcoin-quantum-safe-transaction-starkware",
+        "source": "Decrypt",
+        "published": "2026-08-27T22:36:04.000Z",
+        "category": "Projekt-News",
+        "summary": "The transaction used Bitcoin’s existing rules to protect funds from a future quantum attack without requiring a network upgrade."
+      },
+      {
+        "title": "Bitcoin Privacy Wallet Sparrow Issues Update After AI Flags Fixes",
+        "link": "https://decrypt.co/376755/bitcoin-sparrow-wallet-update-ai-fixes",
+        "source": "Decrypt",
+        "published": "2026-08-27T21:36:05.000Z",
+        "category": "On-Chain & Marktstruktur",
+        "summary": "Developer Craig Raw said an AI-assisted review produced most of the fixes in version 2.5.4, though none appeared likely to put users’ funds at risk."
+      },
+      {
+        "title": "Grayscale says Zcash can challenge Bitcoin’s network effects as privacy demand grows",
+        "link": "https://cointelegraph.com/markets/zcash-bitcoin-network-effects-grayscale-privacy?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+        "source": "Cointelegraph",
+        "published": "2026-08-27T18:51:02.000Z",
+        "category": "Projekt-News",
+        "summary": "ZEC has climbed roughly 19-fold in a year, yet Grayscale says its sub-1% share of Bitcoin’s market cap leaves room for further upside."
+      },
+      {
+        "title": "Bitcoin Eyes Major Resistance as Jackson Hole Kicks Off With Unusual Fed Agenda",
+        "link": "https://decrypt.co/376737/bitcoin-resistance-jackson-hole-fed-agenda",
+        "source": "Decrypt",
+        "published": "2026-08-27T17:36:04.000Z",
+        "category": "Makro & Regulierung",
+        "summary": "BTC is holding above $80,000 into a Fed symposium that, for the first time in 40 years, is built around crypto's own turf—payments and financial infrastructure."
+      },
+      {
+        "title": "Bitcoin’s 23% rally sends beaten-down miners soaring past AI stocks",
+        "link": "https://cointelegraph.com/markets/bitcoin-miner-stocks-rally-crypto-demand-ai-hpc?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+        "source": "Cointelegraph",
+        "published": "2026-08-27T16:04:15.000Z",
+        "category": "Projekt-News",
+        "summary": "Canaan, American Bitcoin and Cango jumped as much as 67% as renewed crypto demand showed BTC exposure can still drive mining equities despite the industry’s AI push."
+      },
+      {
+        "title": "AI Finds Critical Flaw in Bitcoin Lightning, Devs Issue Emergency Warning",
+        "link": "https://decrypt.co/376714/ai-critical-flaw-bitcoin-lightning-warning",
+        "source": "Decrypt",
+        "published": "2026-08-27T15:45:28.000Z",
+        "category": "Projekt-News",
+        "summary": "The Lightning software project said it is preparing fixes after confirming that several AI-generated vulnerability reports were accurate."
+      }
+    ]
+  },
+  {
     "date": "2026-08-25",
     "items": [
       {
