@@ -1,5 +1,26 @@
 [
   {
+    "date": "2026-09-01",
+    "items": [
+      {
+        "title": "Robinhood Chain beats Ethereum in daily revenue as memecoin trading takes over",
+        "link": "https://www.coindesk.com/markets/2026/08/31/robinhood-chain-beats-ethereum-in-daily-revenue-as-memecoin-trading-takes-over",
+        "source": "CoinDesk",
+        "published": "2026-08-31T11:53:56.000Z",
+        "category": "Projekt-News",
+        "summary": "The two-month-old network processed a record 5.52 million transactions on Aug. 30 as users launched 22,600 tokens and memecoin trading tools drove most of the $2.66 million in revenue."
+      },
+      {
+        "title": "Crypto.com's Cronos Halts Entire Blockchain After $75M Tectonic Exploit",
+        "link": "https://decrypt.co/376913/crypto-coms-cronos-halts-entire-blockchain-after-75m-tectonic-exploit",
+        "source": "Decrypt",
+        "published": "2026-08-31T09:41:27.000Z",
+        "category": "On-Chain & Marktstruktur",
+        "summary": "Some $6 million reached Ethereum before validators froze the chain, stranding the rest on a network that still is not producing blocks."
+      }
+    ]
+  },
+  {
     "date": "2026-08-29",
     "items": [
       {
