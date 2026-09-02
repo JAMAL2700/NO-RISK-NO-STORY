@@ -1,5 +1,26 @@
 [
   {
+    "date": "2026-09-03",
+    "items": [
+      {
+        "title": "CrowdStrike and federal authorities dismantle Russian malware that secretly stole crypto for 8 years",
+        "link": "https://www.coindesk.com/tech/2026/09/02/crowdstrike-and-federal-authorities-dismantle-russian-malware-that-secretly-stole-crypto-for-8-years",
+        "source": "CoinDesk",
+        "published": "2026-09-02T13:14:47.000Z",
+        "category": "Makro & Regulierung",
+        "summary": "Russia-based Sality watched for copied bitcoin and Ethereum addresses and quietly replaced them with the attacker’s. CrowdStrike and law enforcement have now isolated more than 15,000 infected machines."
+      },
+      {
+        "title": "A Fed rate increase would be a mistake, some observers say as bitcoin, gold, stocks fall",
+        "link": "https://www.coindesk.com/daybook-us/2026/09/02/a-fed-rate-increase-would-be-a-mistake-some-observers-say-as-bitcoin-gold-stocks-fall",
+        "source": "CoinDesk",
+        "published": "2026-09-02T11:14:58.000Z",
+        "category": "Makro & Regulierung",
+        "summary": "Your day-ahead look for Sept. 2, 2026"
+      }
+    ]
+  },
+  {
     "date": "2026-09-02",
     "items": [
       {

@@ -1,5 +1,18 @@
 [
   {
+    "date": "2026-09-03",
+    "items": [
+      {
+        "title": "CrowdStrike and federal authorities dismantle Russian malware that secretly stole crypto for 8 years",
+        "link": "https://www.coindesk.com/tech/2026/09/02/crowdstrike-and-federal-authorities-dismantle-russian-malware-that-secretly-stole-crypto-for-8-years",
+        "source": "CoinDesk",
+        "published": "2026-09-02T13:14:47.000Z",
+        "category": "Makro & Regulierung",
+        "summary": "Russia-based Sality watched for copied bitcoin and Ethereum addresses and quietly replaced them with the attacker’s. CrowdStrike and law enforcement have now isolated more than 15,000 infected machines."
+      }
+    ]
+  },
+  {
     "date": "2026-09-01",
     "items": [
       {
