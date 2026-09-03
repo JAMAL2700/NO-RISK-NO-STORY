@@ -1,5 +1,18 @@
 [
   {
+    "date": "2026-09-04",
+    "items": [
+      {
+        "title": "Coldcard hacker swaps stolen Bitcoin for ETH via THORChain",
+        "link": "https://cointelegraph.com/news/coldcard-hacker-swaps-stolen-bitcoin-eth-thorchain?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+        "source": "Cointelegraph",
+        "published": "2026-09-03T09:31:07.000Z",
+        "category": "On-Chain & Marktstruktur",
+        "summary": "The third-wave Coldcard exploiter moved about 10% of stolen funds through THORChain as researchers traced the assets to a new Ethereum address."
+      }
+    ]
+  },
+  {
     "date": "2026-09-03",
     "items": [
       {
