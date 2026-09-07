@@ -1,5 +1,42 @@
 [
   {
+    "date": "2026-09-08",
+    "items": [
+      {
+        "title": "Ethereum Foundation names 2 ‘must ship’ EIPs for Hegotá upgrade",
+        "link": "https://cointelegraph.com/news/ethereum-foundation-names-2-must-ship-eips-for-hegot-upgrade?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+        "source": "Cointelegraph",
+        "published": "2026-09-07T20:21:31.000Z",
+        "category": "Projekt-News",
+        "summary": "Ethereum’s Hegotá upgrade will center on FOCIL and Frame Transactions as developers weigh dozens of other proposed changes for inclusion."
+      },
+      {
+        "title": "Ethereum commits to letting users pay gas fees without having to hold ETH",
+        "link": "https://www.coindesk.com/tech/2026/09/07/ethereum-commits-to-letting-users-pay-gas-fees-without-having-to-hold-eth",
+        "source": "CoinDesk",
+        "published": "2026-09-07T13:54:07.000Z",
+        "category": "Projekt-News",
+        "summary": "The Frame Transactions feature was locked into the Hegotá upgrade last month, and Ethereum co-founder Vitalik Buterin says the work has moved quickly since."
+      },
+      {
+        "title": "Once-hyped Ethereum rival Harmony wants to shut its blockchain over AI threats",
+        "link": "https://www.coindesk.com/markets/2026/09/07/once-hyped-ethereum-rival-harmony-wants-to-shut-its-blockchain-over-ai-threats",
+        "source": "CoinDesk",
+        "published": "2026-09-07T08:02:18.000Z",
+        "category": "Projekt-News",
+        "summary": "Developers want to voluntarily shut down the network, saying state actors and AI agents have made security too difficult, then redirect ONE emissions into an AI video business."
+      },
+      {
+        "title": "Harmony proposes shutting down layer 1, migrating ONE to Ethereum",
+        "link": "https://cointelegraph.com/news/harmony-proposes-shutting-down-layer-1-migrating-one-to-ethereum?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+        "source": "Cointelegraph",
+        "published": "2026-09-07T05:00:49.000Z",
+        "category": "On-Chain & Marktstruktur",
+        "summary": "Harmony proposed sunsetting its layer-1 blockchain and migrating ONE to Ethereum, weeks after an exploit led to plans to discard 109,000 transactions."
+      }
+    ]
+  },
+  {
     "date": "2026-09-06",
     "items": [
       {

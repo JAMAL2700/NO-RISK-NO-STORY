@@ -1,5 +1,90 @@
 [
   {
+    "date": "2026-09-08",
+    "items": [
+      {
+        "title": "Liquid Hackers Return $270M in Bitcoin After Swiping $320 Million",
+        "link": "https://decrypt.co/377600/liquid-hackers-return-270m-bitcoin",
+        "source": "Decrypt",
+        "published": "2026-09-07T19:13:56.000Z",
+        "category": "On-Chain & Marktstruktur",
+        "summary": "Nearly 600 BTC remains outstanding after Blockstream told the actors in an on-chain message that Liquid’s bridge nodes had been patched."
+      },
+      {
+        "title": "Bitcoin fund flows show investors trading Fed rate path, not exiting market: CoinShares",
+        "link": "https://cointelegraph.com/markets/crypto-fund-flows-show-investors-trading-fed-rate-path-not-exiting-market-coinshares?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+        "source": "Cointelegraph",
+        "published": "2026-09-07T17:29:27.000Z",
+        "category": "Makro & Regulierung",
+        "summary": "Bitcoin’s struggle to break $80,000 comes as markets price in a growing chance of a September rate hike, putting monetary conditions back in focus."
+      },
+      {
+        "title": "Yen intervention meets US inflation data: Five things to know in Bitcoin this week",
+        "link": "https://cointelegraph.com/markets/markets-tilt-toward-september-rate-hikes-five-things-to-know-in-bitcoin-this-week?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+        "source": "Cointelegraph",
+        "published": "2026-09-07T12:10:22.000Z",
+        "category": "Makro & Regulierung",
+        "summary": "This week’s CPI and PPI prints, along with the Fed’s Sept. 16 rate decision, could determine whether Bitcoin can secure $80,000 as a support level."
+      },
+      {
+        "title": "Coldcard Hacker Moves $7.7M, Nearly Half of Third-Wave Bitcoin Haul",
+        "link": "https://decrypt.co/377537/coldcard-hacker-moves-7-7m-nearly-half-of-third-wave-bitcoin-haul",
+        "source": "Decrypt",
+        "published": "2026-09-07T11:09:27.000Z",
+        "category": "On-Chain & Marktstruktur",
+        "summary": "The attacker built 293 separate vaults for the stolen Bitcoin and is emptying them in order of size, largest first."
+      },
+      {
+        "title": "Bitcoin struggles at $83,000 'wall' as whales flip into net selling",
+        "link": "https://www.coindesk.com/markets/2026/09/07/bitcoin-investors-turn-to-selling-as-usd83-000-resistance-holds",
+        "source": "CoinDesk",
+        "published": "2026-09-07T09:48:51.000Z",
+        "category": "On-Chain & Marktstruktur",
+        "summary": "All wallet cohorts have shifted into net distribution for the first time since early June, but a potential golden cross offers bulls some hope."
+      },
+      {
+        "title": "Coldcard third-wave attacker moves 45% of stolen Bitcoin",
+        "link": "https://cointelegraph.com/news/coldcard-third-wave-attacker-moves-bitcoin-stolen?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+        "source": "Cointelegraph",
+        "published": "2026-09-07T09:36:19.000Z",
+        "category": "On-Chain & Marktstruktur",
+        "summary": "Galaxy said 82% of Bitcoin stolen across all Coldcard attacks remains in the original addresses, with 18% moved in apparent laundering."
+      },
+      {
+        "title": "Coldcard hacker moves $7.7 million in BTC, 45% of bitcoin stolen in third attack wave",
+        "link": "https://www.coindesk.com/business/2026/09/07/coldcard-hacker-moves-45-of-bitcoin-stolen-in-third-attack-wave",
+        "source": "CoinDesk",
+        "published": "2026-09-07T09:32:05.000Z",
+        "category": "On-Chain & Marktstruktur",
+        "summary": "The attacker has now drained the 11 largest vaults tied to the third wave of Coldcard thefts, Galaxy Research said."
+      },
+      {
+        "title": "No, Friday's jobs report hasn't materially boosted Fed rate hike odds",
+        "link": "https://www.coindesk.com/markets/2026/09/07/no-friday-s-jobs-report-hasn-t-materially-boost-fed-rate-hike-odds",
+        "source": "CoinDesk",
+        "published": "2026-09-07T08:38:17.000Z",
+        "category": "Makro & Regulierung",
+        "summary": "BTC fell on Friday and Treasury yields rose, but the hawkish market reaction looks overdone when compared to the largely steady Fed rate hike odds."
+      },
+      {
+        "title": "Bitcoin sidechain Liquid pauses after purported ‘white hats’ withdraw $320M in BTC",
+        "link": "https://cointelegraph.com/news/liquid-network-pauses-320m-bitcoin-withdrawal?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+        "source": "Cointelegraph",
+        "published": "2026-09-07T05:40:05.000Z",
+        "category": "Projekt-News",
+        "summary": "The actors told Blockstream they would return most of the 4,000 BTC after the Elements vulnerability is patched across the network."
+      },
+      {
+        "title": "Bitcoin network used by exchanges hit by $320 million exploit. Hackers claim they're the 'good guys'",
+        "link": "https://www.coindesk.com/markets/2026/09/07/bitcoin-network-used-by-exchanges-hit-by-usd320-million-exploit-hackers-claim-they-re-the-good-guys",
+        "source": "CoinDesk",
+        "published": "2026-09-07T03:43:12.000Z",
+        "category": "On-Chain & Marktstruktur",
+        "summary": "Liquid Network, a settlement layer used by exchanges, halted all transactions after losing $320 million worth of bitcoin in a security exploit."
+      }
+    ]
+  },
+  {
     "date": "2026-09-07",
     "items": [
       {
