@@ -1,5 +1,34 @@
 [
   {
+    "date": "2026-10-26",
+    "items": [
+      {
+        "title": "AI agents help rescue ETH’s Glamsterdam fork, ‘Steal My Bitcoin’ site: Hodler’s Digest",
+        "link": "https://cointelegraph.com/magazine/ai-agents-help-rescue-eths-glamsterdam-fork-steal-my-bitcoin-site-hodlers-digest?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+        "source": "Cointelegraph",
+        "published": "2026-10-25T22:48:40.000Z",
+        "category": "On-Chain & Marktstruktur",
+        "summary": "Similar to the Hugging Face hack, Ethereum researchers have set up an AI Agent message board to help rescue the Glamsterdam fork. New site says ‘Steal My Bitcoin’... if you can."
+      },
+      {
+        "title": "Initia halts blockchain after exploit reportedly drains over $2.6M",
+        "link": "https://cointelegraph.com/news/initia-halts-blockchain-exploit-drained?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+        "source": "Cointelegraph",
+        "published": "2026-10-23T18:39:02.000Z",
+        "category": "On-Chain & Marktstruktur",
+        "summary": "The blockchain suspended its layer-1 network and rollups after security researchers identified unauthorized token minting and millions in assets transferred to Ethereum."
+      },
+      {
+        "title": "Ethereum Delays Glamsterdam Testnet Fork Over Gas Security Flaws",
+        "link": "https://decrypt.co/381681/ethereum-delays-glamsterdam-testnet-fork-over-gas-security-flaws",
+        "source": "Decrypt",
+        "published": "2026-10-23T11:49:37.000Z",
+        "category": "Projekt-News",
+        "summary": "The Hoodi testnet fork is off after ChainSecurity found gas changes that could let contracts lock in failures, citing 13 real-world cases."
+      }
+    ]
+  },
+  {
     "date": "2026-09-08",
     "items": [
       {
